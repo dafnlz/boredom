@@ -26,8 +26,9 @@ course Teams folder *SPO-14560 Project Seminar I - General*:
 
 `data/raw_manifest.csv` lists every extracted file with its size and SHA-256.
 
-`data/raw.dvc` is committed and records the content hash of the whole
-directory, so the raw data can be verified without being published.
+`data/raw.dvc` is committed and records the md5 of the whole directory. Together
+with `raw_manifest.csv` it is enough to verify an unpacked copy against this
+repository; the data itself is not mirrored, it stays in the course folder.
 
 ## derived/
 
@@ -51,5 +52,5 @@ archives really do change, run `dvc unprotect data/raw` first.
 
 ```bash
 python src/00_unpack_raw.py --source /path/to/folder/with/the/zips
-dvc add data/raw          # only if hashes changed
+dvc status                # should report "Data and pipelines are up to date"
 ```

@@ -39,43 +39,27 @@ it is written to `data/derived/`.
 
 ## Getting the data
 
-The raw data is not in this repository. It comes from three ZIP archives in the
-course Teams folder *SPO-14560 Project Seminar I - General*
-(`Anaropia.zip`, `PsychoPy.zip`, `LimeSurvey.zip`). With those in place:
+The raw data is not stored in this repository and is not mirrored anywhere else.
+It stays where the study keeps it: the course folder *Balance and VR* on the
+University of Konstanz Nextcloud, as three archives — `Anaropia.zip` (VR
+tracking), `PsychoPy.zip` (event logs) and `LimeSurvey.zip` (questionnaires).
+Anyone with access to the course folder can reproduce `data/raw/` exactly:
 
 ```bash
 conda env create -f environment.yml && conda activate boredom
 python src/00_unpack_raw.py --source /path/to/folder/with/the/zips
-dvc add data/raw          # only when the hashes change
+dvc status               # confirms the tree matches data/raw.dvc
 ```
 
-### Pulling the raw data from the university cloud
-
-The raw data lives in the University of Konstanz Nextcloud, not in this
-repository. The DVC remote that points at it is deliberately kept in
-`.dvc/config.local`, which is not committed: the storage is access-controlled, so
-publishing its address would buy nothing and would expose an account path.
-
-To set it up on a fresh machine, in the repository root:
-
-```bash
-pip install dvc-webdav
-dvc remote add --local -d ukn \
-    "webdavs://cloud.uni-konstanz.de/remote.php/dav/files/<USERNAME>/Balance%20and%20VR/dvc-storage"
-dvc remote modify --local ukn user <USERNAME>
-dvc remote modify --local ukn password <APP-PASSWORD>
-```
-
-`<APP-PASSWORD>` is an app password generated in Nextcloud under
-*Settings → Security → Devices & sessions*, not the account password. It is
-stored only in `.dvc/config.local`.
-
-Then `dvc push` uploads the raw data and `dvc pull` fetches it.
+There is no DVC remote on purpose. Mirroring 0.9 GB into a second location would
+duplicate data the course already stores and would not make anything more
+verifiable: `data/raw.dvc` pins the md5 of the whole directory and
+`data/raw_manifest.csv` carries the SHA-256 of each of the 272 files, so an
+unpacked copy can be checked against this repository byte for byte. DVC is used
+here for integrity and immutability, not for distribution.
 
 `src/00_unpack_raw.py` is idempotent and resumable, and writes
 `data/raw_manifest.csv` with the SHA-256 of every extracted file.
-`data/raw.dvc` records the content hash of the whole directory, so the raw
-data can be verified without being published.
 
 ## Note on participant data
 

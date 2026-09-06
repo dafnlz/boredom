@@ -49,6 +49,29 @@ python src/00_unpack_raw.py --source /path/to/folder/with/the/zips
 dvc add data/raw          # only when the hashes change
 ```
 
+### Pulling the raw data from the university cloud
+
+The raw data lives in the University of Konstanz Nextcloud, not in this
+repository. The DVC remote that points at it is deliberately kept in
+`.dvc/config.local`, which is not committed: the storage is access-controlled, so
+publishing its address would buy nothing and would expose an account path.
+
+To set it up on a fresh machine, in the repository root:
+
+```bash
+pip install dvc-webdav
+dvc remote add --local -d ukn \
+    "webdavs://cloud.uni-konstanz.de/remote.php/dav/files/<USERNAME>/Balance%20and%20VR/dvc-storage"
+dvc remote modify --local ukn user <USERNAME>
+dvc remote modify --local ukn password <APP-PASSWORD>
+```
+
+`<APP-PASSWORD>` is an app password generated in Nextcloud under
+*Settings → Security → Devices & sessions*, not the account password. It is
+stored only in `.dvc/config.local`.
+
+Then `dvc push` uploads the raw data and `dvc pull` fetches it.
+
 `src/00_unpack_raw.py` is idempotent and resumable, and writes
 `data/raw_manifest.csv` with the SHA-256 of every extracted file.
 `data/raw.dvc` records the content hash of the whole directory, so the raw

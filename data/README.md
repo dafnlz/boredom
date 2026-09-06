@@ -24,6 +24,17 @@ It stays inside `raw/` because filenames contain participant codes.
 `data/raw.dvc` is committed and records the content hash of the whole
 directory, so the raw data can be verified without being published.
 
+## derived/
+
+`balance_data_2026.csv`, `VR-App_output.csv` and `TrialOrder_Part2.xlsx` come from
+the supervisor's MATLAB pipeline — see `derived/SOURCE.md`. The two `qc_*.csv`
+files are produced by `notebooks/01_qc.ipynb`:
+
+| file | produced by | content |
+|---|---|---|
+| `qc_trial_inventory.csv` | `01_qc` | one row per raw recording: duration, marker heights, zero fractions |
+| `qc_exclusions.csv` | `01_qc` | what is dropped from the analysis set and why |
+
 ## Note on write protection
 
 `dvc add` links the files into the DVC cache and makes them read-only, which is

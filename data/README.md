@@ -2,10 +2,16 @@
 
 ```
 data/
-├── raw/        # DVC-tracked, not in git — see src/00_unpack_raw.py
-├── derived/    # analysis-ready tables (git-ignored until pseudonymised)
+├── raw/               # DVC-tracked, read-only, byte-exact copy of the archives
+├── raw_manifest.csv   # SHA-256 of every file in raw/
+├── derived/           # analysis-ready tables, committed
 └── README.md
 ```
+
+**`data/raw/` is never modified.** It holds exactly what came out of the three
+archives and nothing else — the manifest is deliberately kept outside it so that
+the directory stays a faithful copy. Anything computed from the raw data is
+written to `data/derived/`.
 
 ## raw/
 
@@ -18,8 +24,7 @@ course Teams folder *SPO-14560 Project Seminar I - General*:
 | `PsychoPy.zip` | `raw/psychopy/` | PsychoPy event logs (`.csv`, `.log`, `.psydat`) |
 | `LimeSurvey.zip` | `raw/limesurvey/` | questionnaire exports (SBPS, MSBS, check-up ratings) |
 
-`raw/manifest.csv` lists every extracted file with its size and SHA-256.
-It stays inside `raw/` because filenames contain participant codes.
+`data/raw_manifest.csv` lists every extracted file with its size and SHA-256.
 
 `data/raw.dvc` is committed and records the content hash of the whole
 directory, so the raw data can be verified without being published.

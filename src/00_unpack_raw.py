@@ -9,7 +9,9 @@ The raw data ships as three ZIP archives exported from the course Teams folder
     LimeSurvey.zip  questionnaire -> data/raw/limesurvey/
 
 Each file's SHA-256 is computed from the stream while it is written, so the
-~0.9 GB of raw data is read once and never re-hashed. Files already present
+~0.9 GB of raw data is read once and never re-hashed. The manifest is written
+next to data/raw/, never inside it: once extracted, data/raw/ holds exactly the
+contents of the archives and nothing else. Files already present
 with the expected size keep their hash from the existing manifest, which makes
 the script both idempotent and resumable: interrupt it and run it again.
 
@@ -38,7 +40,7 @@ ARCHIVES = {
 
 REPO = Path(__file__).resolve().parents[1]
 RAW = REPO / "data" / "raw"
-MANIFEST = RAW / "manifest.csv"
+MANIFEST = REPO / "data" / "raw_manifest.csv"
 CHUNK = 1 << 20
 
 

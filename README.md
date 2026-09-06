@@ -21,12 +21,21 @@ markers at ~90 Hz; there is no force plate in this dataset.
 
 ```
 data/
-  raw/        # 272 files, 0.91 GB — DVC-tracked, not in git
-  derived/    # analysis-ready tables, committed (see data/derived/SOURCE.md)
+  raw/               # 272 files, 0.91 GB — DVC-tracked, read-only, never edited
+  raw_manifest.csv   # SHA-256 of every raw file
+  derived/           # analysis-ready tables, committed (see data/derived/SOURCE.md)
 notebooks/    # 01_qc, 02_prepare, 03_analysis
 src/          # scripts run outside the notebooks
 figures/
 ```
+
+## Working rule: raw data is never modified
+
+`data/raw/` is a byte-exact reproduction of the three source archives — 272
+files, nothing added, nothing renamed, nothing written back. The manifest lives
+beside the directory rather than inside it, and `dvc add` leaves every file
+read-only. Notebooks open `data/raw/` for reading only; everything derived from
+it is written to `data/derived/`.
 
 ## Getting the data
 
@@ -41,7 +50,7 @@ dvc add data/raw          # only when the hashes change
 ```
 
 `src/00_unpack_raw.py` is idempotent and resumable, and writes
-`data/raw/manifest.csv` with the SHA-256 of every extracted file.
+`data/raw_manifest.csv` with the SHA-256 of every extracted file.
 `data/raw.dvc` records the content hash of the whole directory, so the raw
 data can be verified without being published.
 

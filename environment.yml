@@ -1,0 +1,15 @@
+name: boredom
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pandas
+  - numpy
+  - scipy
+  - statsmodels
+  - matplotlib
+  - openpyxl
+  - jupyterlab
+  - pip
+  - pip:
+      - dvc

@@ -1,4 +1,21 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
+# --- data ---
+# сырые данные под DVC, в git не попадают
+/data/raw
+# производные таблицы содержат коды участников — до псевдонимизации не коммитим
+/data/derived
+/data/_private
+
+# --- никогда ---
+*Names*
+*Participant List*
+*.env
+
+# --- python ---
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+
+# --- прочее ---
+.DS_Store
+Thumbs.db

@@ -24,6 +24,13 @@ It stays inside `raw/` because filenames contain participant codes.
 `data/raw.dvc` is committed and records the content hash of the whole
 directory, so the raw data can be verified without being published.
 
+## Note on write protection
+
+`dvc add` links the files into the DVC cache and makes them read-only, which is
+what keeps the raw data from being edited by accident. Re-running the unpack
+script on an unchanged tree is a no-op and needs no special handling; if the
+archives really do change, run `dvc unprotect data/raw` first.
+
 ## Reproducing
 
 ```bash

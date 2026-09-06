@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import os
 import sys
 import time
 import zipfile
@@ -50,6 +51,8 @@ def load_manifest() -> dict[str, dict]:
 
 def save_manifest(rows: dict[str, dict]) -> None:
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
+    if MANIFEST.exists() and not os.access(MANIFEST, os.W_OK):
+        raise PermissionError(MANIFEST)
     with MANIFEST.open("w", newline="", encoding="utf-8") as fh:
         w = csv.DictWriter(fh, fieldnames=["archive", "path", "bytes", "sha256"])
         w.writeheader()
@@ -113,14 +116,23 @@ def main() -> int:
         if stopped_early:
             break
 
-    save_manifest(rows)
+    if new or not MANIFEST.exists():
+        try:
+            save_manifest(rows)
+        except PermissionError:
+            print("data/raw is write-protected by DVC. Run 'dvc unprotect data/raw' "
+                  "first if you really need to re-extract.", file=sys.stderr)
+            return 3
     total = sum(int(r["bytes"]) for r in rows.values())
     print(f"extracted now: {new} | already present: {kept} | "
           f"in manifest: {len(rows)} files, {total / 1e9:.2f} GB")
     if stopped_early:
         print("time budget reached — run the script again to continue")
         return 2
-    print(f"manifest -> {MANIFEST.relative_to(REPO)}")
+    if new:
+        print(f"manifest -> {MANIFEST.relative_to(REPO)}")
+    else:
+        print("nothing to do — data/raw already matches the archives")
     return 0
 
 

@@ -22,7 +22,7 @@ markers at ~90 Hz; there is no force plate in this dataset.
 ```
 data/
   raw/        # 272 files, 0.91 GB — DVC-tracked, not in git
-  derived/    # analysis-ready tables (git-ignored until pseudonymised)
+  derived/    # analysis-ready tables, committed (see data/derived/SOURCE.md)
 notebooks/    # 01_qc, 02_prepare, 03_analysis
 src/          # scripts run outside the notebooks
 figures/
@@ -47,9 +47,11 @@ data can be verified without being published.
 
 ## Note on participant data
 
-Filenames and derived tables contain participant codes. Nothing that carries a
-code is committed to this repository; the code-to-name list stays in the course
-Teams folder and is never copied here.
+Participants are identified only by the self-generated pseudonymous code used
+throughout the study. The code-to-name list stays in the course Teams folder and
+is never copied here. Raw data — which also carries age, sex and questionnaire
+responses — is DVC-tracked and not published; only the derived sway parameters,
+body height and body weight are in this repository.
 
 ## Analysis boundary
 

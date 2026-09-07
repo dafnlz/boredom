@@ -26,7 +26,8 @@ data/
   derived/           # analysis-ready tables, committed (see data/derived/SOURCE.md)
 notebooks/    # 01_qc, 02_prepare, 03_analysis
 src/          # scripts run outside the notebooks
-figures/
+figures/      # paired_outcomes.png
+results/      # confirmatory_tests.csv
 ANALYSIS_PLAN.md   # the test, fixed in writing before it was run
 ```
 
@@ -37,7 +38,7 @@ ANALYSIS_PLAN.md   # the test, fixed in writing before it was run
 | `src/00_unpack_raw.py` | the three source archives | `data/raw/`, `data/raw_manifest.csv` |
 | `notebooks/01_qc.ipynb` | `data/raw/vr/`, `balance_data_2026.csv` | `qc_trial_inventory.csv`, `qc_exclusions.csv` |
 | `notebooks/02_prepare.ipynb` | the above + `data/raw/limesurvey/` | `analysis_long.csv`, `analysis_long_codebook.csv` |
-| `notebooks/03_analysis.ipynb` | `analysis_long.csv` | tables and figures |
+| `notebooks/03_analysis.ipynb` | `analysis_long.csv` | `results/confirmatory_tests.csv`, `figures/paired_outcomes.png` |
 
 `analysis_long.csv` has one row per participant × condition × block. Every missing
 value of the primary outcome in it is matched against `qc_exclusions.csv`, and

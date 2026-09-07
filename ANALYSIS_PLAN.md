@@ -106,6 +106,29 @@ this file is the record.
 *Любое отступление от этого документа записывается в раздел «Deviations» ниже, с датой и
 причиной, а не правкой текста выше. Историю ведёт git.*
 
+### Clarifications
+
+**7 September 2026 — added before any test was run.**
+Section 3 says the four blocks are averaged within each participant × condition but
+does not say what to do when a block is missing, and four blocks are missing for QC
+reasons. Fixed now, before the primary test is executed: the mean is taken over the
+blocks that are available, with no minimum number of blocks required. A sensitivity
+analysis restricted to participants who have all four blocks in both conditions is
+reported alongside the primary test.
+
+Section 7 says the mixed model takes `block` as a fixed effect but does not say how
+`block` is coded, and does not say whether the outcome is transformed. Fixed now,
+also before any test was run: `block` enters as a linear term (1–4) so the
+interaction tests whether an effect builds up across the session, which is the
+question the model was named for; and the outcome enters the mixed model as its
+natural logarithm, because it is a power measure bounded below by zero and
+right-skewed. Neither choice touches the primary test: the Wilcoxon test is
+rank-based, and a logarithm is monotonic, so it would return the same result either
+way.
+
+All of the above is recorded here rather than in the notebook, and this commit
+precedes the commit that adds `03_analysis.ipynb`.
+
 ### Deviations
 
 *(none)*

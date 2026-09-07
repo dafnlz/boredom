@@ -27,7 +27,32 @@ data/
 notebooks/    # 01_qc, 02_prepare, 03_analysis
 src/          # scripts run outside the notebooks
 figures/
+ANALYSIS_PLAN.md   # the test, fixed in writing before it was run
 ```
+
+## Pipeline
+
+| step | reads | writes |
+|---|---|---|
+| `src/00_unpack_raw.py` | the three source archives | `data/raw/`, `data/raw_manifest.csv` |
+| `notebooks/01_qc.ipynb` | `data/raw/vr/`, `balance_data_2026.csv` | `qc_trial_inventory.csv`, `qc_exclusions.csv` |
+| `notebooks/02_prepare.ipynb` | the above + `data/raw/limesurvey/` | `analysis_long.csv`, `analysis_long_codebook.csv` |
+| `notebooks/03_analysis.ipynb` | `analysis_long.csv` | tables and figures |
+
+`analysis_long.csv` has one row per participant × condition × block. Every missing
+value of the primary outcome in it is matched against `qc_exclusions.csv`, and
+`02_prepare.ipynb` stops if any gap is not explained by a rule.
+
+## The analysis was fixed before it was run
+
+`ANALYSIS_PLAN.md` names one primary outcome, one confirmatory test and one alpha
+level, states what the design can and cannot detect at this sample size, and marks
+everything else as secondary or exploratory. It was committed before
+`03_analysis.ipynb` existed; the git history of the two files is the evidence, and
+any later departure is recorded in the plan's *Deviations* section rather than by
+editing it.
+
+`02_prepare.ipynb` computes no comparison between conditions, for the same reason.
 
 ## Working rule: raw data is never modified
 

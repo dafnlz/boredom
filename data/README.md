@@ -39,7 +39,7 @@ files are produced by `notebooks/01_qc.ipynb`:
 | file | produced by | content |
 |---|---|---|
 | `qc_trial_inventory.csv` | `01_qc` | one row per raw recording: duration, marker heights, zero fractions |
-| `qc_exclusions.csv` | `01_qc` | what is dropped from the analysis set and why |
+| `qc_exclusions.csv` | `01_qc` | QC findings with an `action` column: `exclude` drops the row, `keep-and-report` keeps it and sends it to the limitations |
 
 ## Note on write protection
 

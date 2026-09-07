@@ -3,13 +3,13 @@ channels:
   - conda-forge
 dependencies:
   - python=3.11
-  - pandas
   - numpy
+  - pandas
   - scipy
   - statsmodels
   - matplotlib
   - openpyxl
   - jupyterlab
-  - pip
-  - pip:
-      - dvc
+  - nbformat
+  - nbclient
+  - dvc

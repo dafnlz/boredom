@@ -1,6 +1,8 @@
-level,ID,condition,file,action,reason
-participant,AN06AN18,,,exclude,hip marker flat at zero in every recording; centre of mass not computable
-participant,EL30AD28,,,keep-and-report,VR calibration differs by 0.33 m between conditions; absolute sway scaling not comparable
-trial,BI20OE24,HB,Screen_Balance and VR_1_sBI20OE24_B_H1B__t1_INCOMPLETE.csv,exclude,recording ends at 181.4 s of 210 s; resampling would extrapolate
-trial,BI20OE24,LB,Screen_Balance and VR_1_sBI20OE24_A_LB_t1_INCOMPLETE.csv,exclude,recording ends at 161.1 s of 210 s; resampling would extrapolate
-trial,PE16IN18,LB,Screen_Balance and VR_1_sPE16IN18_A_LB_t1_INCOMPLETE.csv,exclude,recording ends at 203.6 s of 210 s; resampling would extrapolate
+level,ID,condition,block,file,action,reason
+participant,AN06AN18,,,,exclude,body markers flat at zero in every recording; centre of mass not computable
+condition,DO11UB30,HB,,,exclude,body markers flat at zero in every HB recording; centre of mass not computable in this condition
+participant,EL30AD28,,,,keep-and-report,VR calibration differs by 0.33 m between conditions; absolute sway scaling not comparable
+trial,BI20OE24,HB,1,Screen_Balance and VR_1_sBI20OE24_B_H1B__t1_INCOMPLETE.csv,exclude,recording ends at 181.4 s of 210 s; resampling would extrapolate
+trial,BI20OE24,LB,1,Screen_Balance and VR_1_sBI20OE24_A_LB_t1_INCOMPLETE.csv,exclude,recording ends at 161.1 s of 210 s; resampling would extrapolate
+trial,PE16IN18,LB,1,Screen_Balance and VR_1_sPE16IN18_A_LB_t1_INCOMPLETE.csv,exclude,recording ends at 203.6 s of 210 s; resampling would extrapolate
+trial,DO11UB30,LB,4,,exclude,no recording for this block in the raw data

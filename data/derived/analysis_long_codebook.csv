@@ -1,0 +1,20 @@
+column,description
+ID,"participant code, as written in the VR file names"
+session,"A or B, the order the two sessions were run in"
+period,"1 for the first session, 2 for the second"
+condition,"HB = high-boredom podcast, LB = low-boredom podcast"
+block,"1-4, the four 210 s balance blocks within a session"
+height,"body height in m, self-reported (LimeSurvey)"
+weight,"body weight in kg, self-reported (LimeSurvey)"
+boredom,spoken 0-10 boredom rating after this block; 99 recoded to NaN
+state_pre,"eight-item state boredom scale, sum, before this session"
+state_post,"eight-item state boredom scale, sum, after this session"
+state_delta,state_post - state_pre
+flag_calibration,"participant kept, but VR calibration differs between conditions"
+no_recording,"no usable recording; sway parameters blanked, rating kept"
+PeriodicPower,sway power at the stimulus frequencies (response sway power)
+RemnantPower,sway power not at the stimulus frequencies (random sway power)
+VisualWeight,W from the independent-channel model fit
+rms_ap,RMS anterior-posterior deviation
+rms_ml,RMS medio-lateral deviation
+rms_total,RMS total deviation

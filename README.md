@@ -26,8 +26,8 @@ data/
   derived/           # analysis-ready tables, committed (see data/derived/SOURCE.md)
 notebooks/    # 01_qc, 02_prepare, 03_analysis
 src/          # scripts run outside the notebooks
-figures/      # paired_outcomes.png
-results/      # confirmatory_tests.csv
+figures/      # paired_outcomes.png, sensitivity_com.png
+results/      # confirmatory_tests.csv, sensitivity_com.csv
 ANALYSIS_PLAN.md   # the test, fixed in writing before it was run
 ```
 
@@ -39,6 +39,7 @@ ANALYSIS_PLAN.md   # the test, fixed in writing before it was run
 | `notebooks/01_qc.ipynb` | `data/raw/vr/`, `balance_data_2026.csv` | `qc_trial_inventory.csv`, `qc_exclusions.csv` |
 | `notebooks/02_prepare.ipynb` | the above + `data/raw/limesurvey/` | `analysis_long.csv`, `analysis_long_codebook.csv` |
 | `notebooks/03_analysis.ipynb` | `analysis_long.csv` | `results/confirmatory_tests.csv`, `figures/paired_outcomes.png` |
+| `notebooks/04_sensitivity_com.ipynb` | `data/raw/vr/`, `balance_data_2026.csv` | `periodic_power_recomputed.csv`, `results/sensitivity_com.csv`, `figures/sensitivity_com.png` |
 
 `analysis_long.csv` has one row per participant × condition × block. Every missing
 value of the primary outcome in it is matched against `qc_exclusions.csv`, and
@@ -54,6 +55,13 @@ any later departure is recorded in the plan's *Deviations* section rather than b
 editing it.
 
 `02_prepare.ipynb` computes no comparison between conditions, for the same reason.
+
+`04_sensitivity_com.ipynb` was added later, and the reason is recorded in the plan's
+*Deviations* section: the pipeline's `getCOM` swaps the hip and shoulder channels on
+every trial, because the check meant to decide whether to swap returns the same value
+in both branches. That notebook re-derives the centre of mass in Python both ways —
+first with the swap, which is what makes it checkable against the pipeline, then
+without — and runs the pre-specified test on both. The pipeline output stays primary.
 
 ## Working rule: raw data is never modified
 

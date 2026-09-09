@@ -131,4 +131,49 @@ precedes the commit that adds `03_analysis.ipynb`.
 
 ### Deviations
 
-*(none)*
+**9 September 2026 — a defect in the processing code, and which version of the
+primary outcome the paper reports.**
+
+While writing up I found that `getCOM`, the function that reconstructs the centre
+of mass from the body markers, swaps the hip and shoulder channels on every trial.
+The check that is supposed to decide whether to swap assigns the same value in both
+of its branches (`4_Data_Analysis/Balance Analysis/pcl_vr_getData_ls.m`, lines
+71-76; the same block is in `LA_toolbox_July24/VR_scripts/pcl_vr_getData.m`, lines
+86-91), so the swap at line 101 is unconditional. In these recordings the shoulder
+marker sits above the hip marker in all 104 usable files, so no swap should occur.
+`balance_data_2026.csv` and `VR-App_output.csv` are the output of that code path,
+so every value used in this analysis carries it.
+
+To find out whether it mattered, `getCOM` and the periodic power calculation were
+re-implemented in Python and run on the raw recordings. Kept as it is, the
+re-implementation reproduces `balance_data_2026.csv` closely (r = .9995, median
+deviation 0.02% across 95 trials), which is the evidence that it is faithful.
+Without the swap, absolute periodic power is roughly half as large, while the
+condition contrast is nearly unchanged.
+
+**Both versions had therefore been computed before this entry was written.** The
+choice of which one the paper reports cannot be presented as blind, and is not.
+The rule adopted is:
+
+> The confirmatory test reported in the paper uses the output of the study's own
+> processing pipeline (`balance_data_2026.csv`). The Python re-derivation is
+> reported as a sensitivity analysis.
+
+The rule is stated in terms of provenance, not of outcome: the pipeline output is
+what the study actually produced and what the supervisor can verify independently,
+and no re-processing has been carried out by the person writing this. It also
+happens to be the conservative choice — the pipeline version yields the **larger**
+p-value of the two — so it cannot have been selected to favour a result.
+
+The defect was reported to the supervisor on 8 September 2026 and no answer had
+arrived at the time of writing. It is described in the paper regardless of whether
+one arrives. If the pipeline is re-run, the analysis in `03_analysis.ipynb` is
+repeated unchanged on the new input and this entry records the substitution; the
+plan itself, including the primary outcome, the test and the alpha level, does not
+change.
+
+*Обе версии были посчитаны до того, как эта запись написана, поэтому выбор
+первичной не выдаётся за слепой. Правило сформулировано по происхождению данных, а
+не по результату: первичным берётся вывод самого исследования, перевывод на Python
+идёт как проверка устойчивости. Побочное свойство правила — оно даёт бо́льшее из
+двух p-значений, то есть не могло быть выбрано ради результата.*

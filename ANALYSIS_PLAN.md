@@ -165,15 +165,27 @@ and no re-processing has been carried out by the person writing this. It also
 happens to be the conservative choice — the pipeline version yields the **larger**
 p-value of the two — so it cannot have been selected to favour a result.
 
-The defect was reported to the supervisor on 8 September 2026 and no answer had
-arrived at the time of writing. It is described in the paper regardless of whether
-one arrives. If the pipeline is re-run, the analysis in `03_analysis.ipynb` is
-repeated unchanged on the new input and this entry records the substitution; the
-plan itself, including the primary outcome, the test and the alpha level, does not
-change.
+The defect was reported to the supervisor on 8 September 2026. He confirmed it on
+10 September and decided that this paper is written on the existing pipeline output,
+with the code corrected afterwards for later cohorts. That settles the rule above
+rather than changing it: the confirmatory test reported here is the one run on
+`balance_data_2026.csv`, the Python re-derivation stays a sensitivity analysis, and
+the defect is described in the paper. No re-processing is expected before the
+deadline.
 
 *Обе версии были посчитаны до того, как эта запись написана, поэтому выбор
 первичной не выдаётся за слепой. Правило сформулировано по происхождению данных, а
 не по результату: первичным берётся вывод самого исследования, перевывод на Python
 идёт как проверка устойчивости. Побочное свойство правила — оно даёт бо́льшее из
 двух p-значений, то есть не могло быть выбрано ради результата.*
+
+**9 September 2026 — correction to a figure quoted in section 5.**
+Section 5 states the smallest detectable effect as "roughly d_z ≈ 0.87". Solving it
+exactly for n = 12, α = .05 two-sided and 80% power under the non-central t gives
+**d_z = 0.89**. The original figure was an approximation and is left in place as written;
+the paper quotes the computed value, which `src/paper_numbers.py` produces as `mde_d_z`.
+The conclusion the figure supports — that this sample can only resolve a large effect —
+is unchanged.
+
+*Точное решение даёт 0,89 вместо приблизительных 0,87, названных в разделе 5. Вывод,
+ради которого цифра приводилась, не меняется.*
